@@ -1,0 +1,167 @@
+@font-face {
+    font-family: Gella;
+    src: url(GellaDisplay-ExpandedMedium.otf);
+}
+@font-face {
+    font-family: Joker;
+    src: url(Joker.otf);
+}
+
+* {
+    font-family: Joker, Arial;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #0f1016;
+}
+
+.flash-yellow {
+    animation: flash .5s ease;
+}
+
+header {
+    position: absolute;
+    top: 10vh;
+    color: #f4f3f3;
+    font-size: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 30px;
+    margin-bottom: 3vh;
+}
+
+.reload {
+    display: flex;
+    font-family: Gella, Arial;
+    color: #f4f3f3;
+    text-decoration: none;
+    justify-content: center;
+}
+
+.reload img {
+    width: 35px;
+    height: 35px;
+}
+
+#game-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    background-color: transparent;
+    border: 2px solid #f4f3f3;
+    border-radius: 50%;
+    /* overflow: hidden; */
+}
+
+#ball, .ball {
+    position: absolute;
+    top: -1000vh;
+    width: 20px;
+    height: 20px;
+    background-color: #f4f3f3;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.plus-sign {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-image: url('Plus_energy.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* background-color: red; */
+    /* color: white; */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    user-select: none;
+    z-index: 1;
+    animation: ease-in plusSign 3.1s;
+}
+
+.game-over {
+    width: 100vw;
+    height: 100vh;
+    /* background: #00000026; */
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* backdrop-filter: invert(1); */
+    z-index: 999;
+    pointer-events: none;
+    animation: ease-in fadeIn .3s;
+}
+
+.red-segment {
+    position: absolute;
+    width: 80px;
+    height: 10px;
+    background-color: rgb(185, 0, 0);
+    clip-path: path('M0,2 C40,6 40,6 80,1 L80,5 C70,10 20,14 0,6 Z');
+    -webkit-clip-path: path('M0,2 C40,6 40,6 80,1 L80,5 C70,10 20,14 0,6 Z');
+    scale: 1.1;
+}
+
+.game-over p {
+    color: #ff0000;
+    filter: drop-shadow(2px 4px 6px red);
+    font-size: 40px;
+}
+
+.fps {
+    position: absolute;
+    bottom: 10vh;
+    color: #f4f3f3;
+    font-size: 16px;
+}
+
+.fps span{
+    font-family: Gella;
+}
+
+@keyframes flash {
+    0% {
+        border-color: #f4f3f3;
+    }
+    25% {
+        border-color: rgb(248, 230, 67);
+    }
+    100% {
+        border-color: #f4f3f3;
+    }
+}
+
+@keyframes plusSign {
+    0% {
+        margin-top: 0px;
+    }
+    20% {
+        margin-top: -2px;
+    }
+    60% {
+        margin-top: 2px;
+        opacity: 1;
+    }
+    100% {
+        margin-top: -2px;
+        opacity: 0;
+    }   
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
