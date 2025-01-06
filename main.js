@@ -1,5 +1,5 @@
 const container = document.getElementById('game-container');
-const gravity = 0.1, maxBounces = 30, containerRadius = container.offsetWidth / 2;
+const gravity = 0.1, containerRadius = container.offsetWidth / 2;
 
 let isGameOver = false, bounceCount = 0, plusSignExists = false, plusSign;
 let lastFrameTime = performance.now(); // Время последнего кадра
@@ -64,6 +64,10 @@ function updateBall(ball) {
     if (Math.random() < 0.5) {
       const newBall = createBall(ball.x, ball.y, ball.vx, ball.vy);
       balls.push(newBall);
+    }
+
+    if (balls.length >= 30) {
+      showWin();
     }
 
     playSound('bounce.mp3');
@@ -138,7 +142,14 @@ function showGameOver() {
   isGameOver = true;
   document.body.insertAdjacentHTML(
     'beforeend',
-    '<div class="game-over"><p>Game Over</p></div>'
+    '<div class="center-line game-over"><p>Game Over</p></div>'
+  );
+}
+function showWin() {
+  isGameOver = true;
+  document.body.insertAdjacentHTML(
+    'beforeend',
+    '<div class="center-line win"><p>Win</p></div>'
   );
 }
 
@@ -175,7 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateGame() {
   if (isGameOver) return;
 
-  if (bounceCount >= maxBounces) return (velocityX = velocityY = 0), showGameOver();
   balls.forEach(updateBall);
   requestAnimationFrame(updateGame);
 }
@@ -187,22 +197,19 @@ const balls = [createBall(0, 0, 2, 2)];
 setInterval(() => (isGameOver ? null : createPlusSign()), 1000);
 setInterval(() => (bounceCount = 0), 1000);
 
-// Начало игры по клику
-document.addEventListener('click', () => {
-  lastFrameTime = performance.now(); // Инициализация перед первым обновлением
-  updateGame();
-}, { once: true });
-
 // Создание и обновление красного отрезка
 let redSegmentAngle = 0;
+
 function updateRedSegment() {
+  if (isGameOver) return; // Останавливаем обновление, если игра завершена
+
   redSegmentAngle = (redSegmentAngle + 0.02) % (2 * Math.PI);
   const redSegment = document.querySelector('.red-segment');
-  const x = 112.5 + (containerRadius - 5) * Math.cos(redSegmentAngle) - 2.5;
+  const x = 111 + (containerRadius - 5) * Math.cos(redSegmentAngle) - 2.5;
   const y = 148 + (containerRadius - 5) * Math.sin(redSegmentAngle) - 2.5;
   redSegment.style.left = `${x}px`;
   redSegment.style.top = `${y}px`;
-  redSegment.style.rotate = `${redSegmentAngle * 57.5 + 270.5}deg`;
+  // redSegment.style.rotate = `${redSegmentAngle * 57.5 + 270.5}deg`;
   requestAnimationFrame(updateRedSegment);
 }
 
@@ -217,10 +224,28 @@ function checkRedSegmentCollision(ball) {
   const ballRect = ball.element.getBoundingClientRect();
   const redSegment = document.querySelector('.red-segment');
   const redSegmentRect = redSegment.getBoundingClientRect();
-  const dx = ballRect.left + ballRect.width / 2 - (redSegmentRect.left + redSegmentRect.width / 2);
-  const dy = ballRect.top + ballRect.height / 2 - (redSegmentRect.top + redSegmentRect.height / 2);
-  if (Math.hypot(dx, dy) < ballRect.width / 2 + redSegmentRect.width / 2) {
+
+  // Проверяем пересечение границ шара и красного сегмента
+  const overlap = !(ballRect.right < redSegmentRect.left ||
+                    ballRect.left > redSegmentRect.right ||
+                    ballRect.bottom < redSegmentRect.top ||
+                    ballRect.top > redSegmentRect.bottom);
+
+  if (overlap) {
+    playSound('delete.mp3');
     ball.element.remove();
     balls.splice(balls.indexOf(ball), 1);
   }
+
+  // Проверка на завершение игры
+  if (balls.length === 0) {
+    showGameOver();
+  }
 }
+
+// Начало игры по клику
+document.addEventListener('click', () => {
+  document.querySelector('.center-line').remove();
+  lastFrameTime = performance.now(); // Инициализация перед первым обновлением
+  updateGame();
+}, { once: true });

@@ -87,7 +87,7 @@ header h1 {
     animation: ease-in plusSign 3.1s;
 }
 
-.game-over {
+.center-line {
     width: 100vw;
     height: 100vh;
     /* background: #00000026; */
@@ -95,26 +95,37 @@ header h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* backdrop-filter: invert(1); */
+    backdrop-filter: grayscale(1);
     z-index: 999;
     pointer-events: none;
     animation: ease-in fadeIn .3s;
+    font-size: 40px;
+}
+
+.center-line.start p {
+    color: #ffffff;
+    filter: drop-shadow(2px 4px 6px rgb(0, 174, 255));
+}
+
+.center-line.game-over p {
+    color: #ff0000;
+    filter: drop-shadow(2px 4px 6px red);
+}
+
+.center-line.win p {
+    color: #00ff37;
+    filter: drop-shadow(2px 4px 6px rgb(0, 255, 42));
 }
 
 .red-segment {
     position: absolute;
     width: 80px;
     height: 10px;
-    background-color: rgb(185, 0, 0);
-    clip-path: path('M0,2 C40,6 40,6 80,1 L80,5 C70,10 20,14 0,6 Z');
-    -webkit-clip-path: path('M0,2 C40,6 40,6 80,1 L80,5 C70,10 20,14 0,6 Z');
-    scale: 1.1;
-}
-
-.game-over p {
-    color: #ff0000;
-    filter: drop-shadow(2px 4px 6px red);
-    font-size: 40px;
+    background: #82020C;
+    background: linear-gradient(135deg, #82020C, #D3233E);
+    /* clip-path: path('M0,2 C40,6 40,6 80,1 L80,5 C70,10 20,14 0,6 Z');
+    -webkit-clip-path: path('M0,2 C40,6 40,6 80,1 L80,5 C70,10 20,14 0,6 Z'); */
+    /* border: 2px solid rgb(185, 0, 0); */
 }
 
 .fps {
