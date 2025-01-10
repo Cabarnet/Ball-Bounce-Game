@@ -1,15 +1,23 @@
 @font-face {
     font-family: Gella;
-    src: url(GellaDisplay-ExpandedMedium.otf);
+    src: url(../fonts/GellaDisplay-ExpandedMedium.otf);
 }
 @font-face {
     font-family: Joker;
-    src: url(Joker.otf);
+    src: url(../fonts/Joker.otf);
+}
+@font-face {
+    font-family: Pixel;
+    src: url(../fonts/Micro5Charted-Regular.ttf);
 }
 
 * {
     font-family: Joker, Arial;
     margin: 0;
+}
+
+header, .fps {
+    /* display: none; */
 }
 
 body {
@@ -18,7 +26,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: #0f1016;
+    background-color: #101010;
 }
 
 .flash-yellow {
@@ -51,6 +59,25 @@ header h1 {
     height: 35px;
 }
 
+.life-container {
+    position: absolute;
+    top: 25vh;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+.life {
+    background-image: url(../img/heart.png);
+    background-size: contain;
+    filter: invert(1);
+    width: 40px;
+    height: 40px;
+    /* background-color: red;
+    border-radius: 50%; */
+    margin: 0 5px;
+}
+
 #game-container {
     position: relative;
     width: 300px;
@@ -71,11 +98,18 @@ header h1 {
     z-index: 10;
 }
 
+.balls-count {
+    font-size: 60px;
+    font-family: Pixel;
+    color: #8d8d8d;
+    position: absolute;
+}
+
 .plus-sign {
     position: absolute;
     width: 40px;
     height: 40px;
-    background-image: url('Plus_energy.png');
+    background-image: url(../img/Plus_energy.png);
     background-size: cover;
     background-repeat: no-repeat;
     /* background-color: red; */
@@ -85,6 +119,16 @@ header h1 {
     user-select: none;
     z-index: 1;
     animation: ease-in plusSign 3.1s;
+}
+
+.exit-area {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    top: 25%;
+    left: 6%;
+    background: #101010;
+    box-shadow: 0px 0px 0px 17px #101010;
 }
 
 .center-line {
@@ -119,13 +163,25 @@ header h1 {
 
 .red-segment {
     position: absolute;
-    width: 80px;
-    height: 10px;
-    background: #82020C;
-    background: linear-gradient(135deg, #82020C, #D3233E);
+    width: 70px;
+    height: 70px;
+    /* background: #82020C;
+    background: linear-gradient(135deg, #82020C, #D3233E); */
+    /* border-radius: 10px; */
+    backdrop-filter: invert(1);
     /* clip-path: path('M0,2 C40,6 40,6 80,1 L80,5 C70,10 20,14 0,6 Z');
     -webkit-clip-path: path('M0,2 C40,6 40,6 80,1 L80,5 C70,10 20,14 0,6 Z'); */
     /* border: 2px solid rgb(185, 0, 0); */
+}
+
+.red-segment::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-image: url(../img/NPCimg.png);
+    background-size: contain;
+    /* animation: fast-rotating linear infinite 2s; */
 }
 
 .fps {
@@ -137,6 +193,15 @@ header h1 {
 
 .fps span{
     font-family: Gella;
+}
+
+@keyframes fast-rotating {
+    0% {
+        rotate: 0deg;
+    }
+    100% {
+        rotate: 360deg;
+    }
 }
 
 @keyframes flash {

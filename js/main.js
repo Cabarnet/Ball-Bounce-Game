@@ -1,10 +1,17 @@
 const container = document.getElementById('game-container');
-const gravity = 0.1, containerRadius = container.offsetWidth / 2;
+const ballsСount = document.querySelector('.balls-count');
+const containerRadius = container.offsetWidth / 2;
 
 let isGameOver = false, bounceCount = 0, plusSignExists = false, plusSign;
 let lastFrameTime = performance.now(); // Время последнего кадра
 
-const maxSpeed = 17.5; // Максимальная скорость
+const gravity = 0.0; // Гравитация
+const ballsToWin = 35; // Шаров для победы
+const newBallProbability = 0.17; // Вероятность создания нового
+const maxSpeed = 13; // Максимальная скорость
+const speedupAmount = 0.75; // Ускорение НА это кол-во
+const deleterSpeed = 0.005; // Скорость удаляющего элемента
+const initialBallSpeed = 3; // Начальная скорость шарика
 
 // Вспомогательная функция для воспроизведения звука
 function playSound(src) {
@@ -61,16 +68,16 @@ function updateBall(ball) {
     ball.y = normalY * (containerRadius - ballRadius);
     bounceCount++;
 
-    if (Math.random() < 0.5) {
+    if (Math.random() < newBallProbability) {
       const newBall = createBall(ball.x, ball.y, ball.vx, ball.vy);
       balls.push(newBall);
     }
-
-    if (balls.length >= 30) {
+    
+    if (balls.length >= ballsToWin) {
       showWin();
     }
 
-    playSound('bounce.mp3');
+    playSound('./sound/bounce.mp3');
   }
 
   // Ограничиваем скорость
@@ -117,7 +124,7 @@ function checkCollision(ball) {
 
   // Проверяем столкновение
   if (Math.hypot(dx, dy) < ballRect.width / 2 + plusRect.width / 2) {
-    const magnitude = Math.sqrt(ball.vx ** 2 + ball.vy ** 2) + 2.5;
+    const magnitude = Math.sqrt(ball.vx ** 2 + ball.vy ** 2) + speedupAmount;
     const angle = Math.atan2(ball.vy, ball.vx);
     ball.vx = magnitude * Math.cos(angle);
     ball.vy = magnitude * Math.sin(angle);
@@ -126,7 +133,7 @@ function checkCollision(ball) {
     if (plusSignExists) {
       plusSign.remove();
       plusSignExists = false;
-      playSound('speedup.mp3');
+      playSound('./sound/speedup.mp3');
 
       // Мигание желтым цветом
       container.classList.add('flash-yellow');
@@ -137,20 +144,55 @@ function checkCollision(ball) {
   }
 }
 
-// Отображение "Game Over"
+// Отображение оконания игры
 function showGameOver() {
   isGameOver = true;
   document.body.insertAdjacentHTML(
     'beforeend',
-    '<div class="center-line game-over"><p>Game Over</p></div>'
+    '<div class="center-line game-over"><p>Lose</p></div>'
   );
+  enableRestart();
 }
+
 function showWin() {
   isGameOver = true;
   document.body.insertAdjacentHTML(
     'beforeend',
     '<div class="center-line win"><p>Win</p></div>'
   );
+  enableRestart();
+}
+
+function enableRestart() {
+  document.addEventListener('click', restartGame, { once: true });
+}
+
+function restartGame() {
+  document.querySelector('.center-line').remove();
+  resetGame();
+  updateGame();
+}
+
+function resetGame() {
+  isGameOver = false;
+  bounceCount = 0;
+  plusSignExists = false;
+  
+  // Удаление всех шаров и знаков плюса
+  balls.forEach(ball => ball.element.remove());
+  balls.length = 0;
+
+  if (plusSign) {
+    plusSign.remove();
+    plusSignExists = false;
+  }
+
+  // Создание нового шара с использованием начальной скорости
+  balls.push(createBall(0, 0, 0, initialBallSpeed));
+
+  // Сброс угла и перезапуск красного сегмента
+  redSegmentAngle = Math.random() * 2 * Math.PI;
+  requestAnimationFrame(updateRedSegment);
 }
 
 // Переменные для расчета FPS
@@ -186,27 +228,27 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateGame() {
   if (isGameOver) return;
 
+  ballsСount.innerHTML = `${balls.length}`;
   balls.forEach(updateBall);
   requestAnimationFrame(updateGame);
 }
 
 // Массив для хранения всех шаров
-const balls = [createBall(0, 0, 2, 2)];
+const balls = [createBall(0, 0, 0, initialBallSpeed)];
 
 // Интервалы для создания ускорителей и сброса счётчика столкновений
 setInterval(() => (isGameOver ? null : createPlusSign()), 1000);
 setInterval(() => (bounceCount = 0), 1000);
 
-// Создание и обновление красного отрезка
-let redSegmentAngle = 0;
+let redSegmentAngle = Math.random() * 2 * Math.PI; // Устанавливаем начальный угол в случайное значение
 
 function updateRedSegment() {
   if (isGameOver) return; // Останавливаем обновление, если игра завершена
 
-  redSegmentAngle = (redSegmentAngle + 0.02) % (2 * Math.PI);
+  redSegmentAngle = (redSegmentAngle + deleterSpeed) % (2 * Math.PI);
   const redSegment = document.querySelector('.red-segment');
-  const x = 111 + (containerRadius - 5) * Math.cos(redSegmentAngle) - 2.5;
-  const y = 148 + (containerRadius - 5) * Math.sin(redSegmentAngle) - 2.5;
+  const x = 110 + (containerRadius - 1) * Math.cos(redSegmentAngle);
+  const y = 110 + (containerRadius - 1) * Math.sin(redSegmentAngle);
   redSegment.style.left = `${x}px`;
   redSegment.style.top = `${y}px`;
   // redSegment.style.rotate = `${redSegmentAngle * 57.5 + 270.5}deg`;
@@ -225,14 +267,25 @@ function checkRedSegmentCollision(ball) {
   const redSegment = document.querySelector('.red-segment');
   const redSegmentRect = redSegment.getBoundingClientRect();
 
-  // Проверяем пересечение границ шара и красного сегмента
+  // Координаты центров шара и красного сегмента
+  const ballCenterX = ballRect.left + ballRect.width / 2;
+  const ballCenterY = ballRect.top + ballRect.height / 2;
+  const redSegmentCenterX = redSegmentRect.left + redSegmentRect.width / 2;
+  const redSegmentCenterY = redSegmentRect.top + redSegmentRect.height / 2;
+
+  // Проверяем пересечение границ шара и красного сегмента - КВАДРАТНАЯ ОБЛАСТЬ
   const overlap = !(ballRect.right < redSegmentRect.left ||
                     ballRect.left > redSegmentRect.right ||
                     ballRect.bottom < redSegmentRect.top ||
                     ballRect.top > redSegmentRect.bottom);
 
+  // Проверяем пересечение - КРУГЛАЯ ОБЛАСТЬ
+  // const ballRadius = ballRect.width / 2;
+  // const redSegmentRadius = redSegmentRect.width / 2;
+  // const overlap = Math.hypot(ballCenterX - redSegmentCenterX, ballCenterY - redSegmentCenterY) < ballRadius + redSegmentRadius;
+
   if (overlap) {
-    playSound('delete.mp3');
+    playSound('./sound/delete.mp3');
     ball.element.remove();
     balls.splice(balls.indexOf(ball), 1);
   }
