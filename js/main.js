@@ -5,12 +5,12 @@ const containerRadius = container.offsetWidth / 2;
 let isGameOver = false, bounceCount = 0, plusSignExists = false, plusSign;
 let lastFrameTime = performance.now(); // Время последнего кадра
 
-const gravity = 0.0; // Гравитация
-const ballsToWin = 35; // Шаров для победы
-const newBallProbability = 0.17; // Вероятность создания нового
+const gravity = 0.1; // Гравитация
+const ballsToWin = 25; // Шаров для победы
+const newBallProbability = 0.15; // Вероятность создания нового
 const maxSpeed = 13; // Максимальная скорость
 const speedupAmount = 0.75; // Ускорение НА это кол-во
-const deleterSpeed = 0.005; // Скорость удаляющего элемента
+const deleterSpeed = 0.02; // Скорость удаляющего элемента
 const initialBallSpeed = 3; // Начальная скорость шарика
 
 // Вспомогательная функция для воспроизведения звука
@@ -83,8 +83,8 @@ function updateBall(ball) {
   // Ограничиваем скорость
   [ball.vx, ball.vy] = limitSpeed(ball.vx, ball.vy);
 
-  ball.element.style.left = `${150 + ball.x - ballRadius}px`;
-  ball.element.style.top = `${150 + ball.y - ballRadius}px`;
+  ball.element.style.left = `${145 + ball.x - ballRadius}px`;
+  ball.element.style.top = `${145 + ball.y - ballRadius}px`;
 
   if (plusSignExists) checkCollision(ball);
 
@@ -164,7 +164,7 @@ function showWin() {
 }
 
 function enableRestart() {
-  document.addEventListener('click', restartGame, { once: true });
+  container.addEventListener('click', restartGame, { once: true });
 }
 
 function restartGame() {
@@ -297,7 +297,7 @@ function checkRedSegmentCollision(ball) {
 }
 
 // Начало игры по клику
-document.addEventListener('click', () => {
+container.addEventListener('click', () => {
   document.querySelector('.center-line').remove();
   lastFrameTime = performance.now(); // Инициализация перед первым обновлением
   updateGame();

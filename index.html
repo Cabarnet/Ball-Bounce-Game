@@ -12,15 +12,92 @@
 <body>
     <header>
         <h1>Ball Bounce Game</h1>
-        <a class="reload" href=""><img src="img/refresh-arrow.png" alt="Retry"></a>
+        <div class="header__bottom">
+            <a class="reload" href=""><img src="img/refresh-arrow.png" alt="Retry"></a>
+            <button class="header__settings"><img src="img/settings.png" alt="Settings" onclick="openSettings()"></button>
+        </div>
     </header>
+    
     <div id="game-container">
         <!-- <div class="exit-area"></div> -->
     </div>
     <div class="balls-count"></div>
+
+
     <div class="fps">FPS: <span></span></div>
+
+
     <div class="center-line start"><p>Press to start</p></div>
+    <div class="settings">
+        <div class="settings__close" onclick="closeSettings()"></div>
+        <div class="settings__container">
+            <img src="img/Close.png" class="close" alt="Close" onclick="closeSettings()">
+            <div class="settings__field">
+                <div class="settings__item" style="padding-bottom: 15px; border-bottom: 1px;">
+                    Volume
+                    <div class="setting-row">
+                        <input type="range" min="0" max="1" step="0.025"> 
+                        <input type="number">
+                    </div>
+                </div>
+                <div class="settings__item">
+                    Gravity 
+                    <div class="setting-row">
+                        <input type="range" min="0" max="1" step="0.025"> 
+                        <input type="number">
+                    </div>
+                </div>
+                <div class="settings__item">
+                    Balls to win
+                    <div class="setting-row">
+                        <input type="range" min="0" max="40" step="1"> 
+                        <input type="number">
+                    </div>
+                </div>
+                <div class="settings__item">
+                    New ball probability (%)
+                    <div class="setting-row">
+                        <input type="range" min="0" max="100" step="1"> 
+                        <input type="number">
+                    </div>
+                </div>
+                <div class="settings__item">
+                    Max ball speed
+                    <div class="setting-row">
+                        <input type="range" min="0" max="100" step="1"> 
+                        <input type="number">
+                    </div>
+                </div>
+                <div class="settings__item">
+                    Booster speedup
+                    <div class="setting-row">
+                        <input type="range" min="0" max="100" step="1"> 
+                        <input type="number">
+                    </div>
+                </div>
+                <div class="settings__item">
+                    Start ball speed
+                    <div class="setting-row">
+                        <input type="range" min="0" max="10" step="0.5"> 
+                        <input type="number">
+                    </div>
+                </div>
+                <div class="settings__item">
+                    Removal element speed
+                    <div class="setting-row">
+                        <input type="range" min="0" max="10" step="0.5"> 
+                        <input type="number">
+                    </div>
+                </div>
+            </div>
+            <Button>Save</Button>
+        </div>
+
+        </form>
+    </div>
+
     <script src="js/main.js"></script>
+    <script src="js/settings.js"></script>
     <!-- <script src="js/outOfContainer.js"></script> -->
 </body>
 

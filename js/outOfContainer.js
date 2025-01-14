@@ -1,13 +1,13 @@
 const container = document.getElementById('game-container');
-const gravity = 0.08, containerRadius = container.offsetWidth / 2;
+const gravity = 0.075, containerRadius = container.offsetWidth / 2;
 
 let isGameOver = false, bounceCount = 0, plusSignExists = false, plusSign;
 let lastFrameTime = performance.now(); // Время последнего кадра
 
-const maxSpeed = 13; // Максимальная скорость
+const maxSpeed = 10; // Максимальная скорость
 const speedupAmount = 1; // Ускорение НА это кол-во
-const deleterSpeed = 0.01; // Скорость удаляющего элемента
-const initialBallSpeed = 1.5; // Начальная скорость шарика
+const deleterSpeed = 0.02; // Скорость удаляющего элемента
+const initialBallSpeed = 2; // Начальная скорость шарика
 
 let lastHitTime = 0; // Время последнего касания с красным сегментом
 let lives = 5; // Количество жизней
@@ -78,8 +78,8 @@ function updateBall(ball) {
   // Ограничиваем скорость
   [ball.vx, ball.vy] = limitSpeed(ball.vx, ball.vy);
 
-  ball.element.style.left = `${150 + ball.x - ballRadius}px`;
-  ball.element.style.top = `${150 + ball.y - ballRadius}px`;
+  ball.element.style.left = `${145 + ball.x - ballRadius}px`;
+  ball.element.style.top = `${145 + ball.y - ballRadius}px`;
 
   if (plusSignExists) checkCollision(ball);
 
@@ -241,8 +241,8 @@ function updateRedSegment() {
 
   redSegmentAngle = (redSegmentAngle + deleterSpeed) % (2 * Math.PI);
   const redSegment = document.querySelector('.red-segment');
-  const x = 115 + (containerRadius - 1) * Math.cos(redSegmentAngle);
-  const y = 115 + (containerRadius - 1) * Math.sin(redSegmentAngle);
+  const x = 110 + (containerRadius - 1) * Math.cos(redSegmentAngle);
+  const y = 110 + (containerRadius - 1) * Math.sin(redSegmentAngle);
   redSegment.style.left = `${x}px`;
   redSegment.style.top = `${y}px`;
   requestAnimationFrame(updateRedSegment);
