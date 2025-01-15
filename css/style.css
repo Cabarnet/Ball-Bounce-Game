@@ -109,6 +109,10 @@ header h1 {
     z-index: 31;
     clip-path: polygon(20px 0, 100% 0, 100% 10px, calc(100% - 3px) 15px, calc(100% - 3px) 50px, 100% 55px, 100% calc(100% - 20px), 
     calc(100% - 20px) 100%, 0 100%, 0 calc(100% - 10px), 3px calc(100% - 15px), 3px calc(100% - 50px), 0 calc(100% - 55px), 0 20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .settings__container img.close {
@@ -122,8 +126,14 @@ header h1 {
 
 .settings__container button {
     height: 30px;
+    font-family: monospace;
+    font-size: 16px;
+    color: #f4f3f3;
+    border: 1px solid #f4f3f3;
+    background: transparent;
     width: calc(100% - 30px);
-    margin: 5px 15px;
+    margin: 15px 0px;
+    filter: drop-shadow(2px 4px 6px #f3f4f4);
 }
 
 .settings__item {
@@ -133,8 +143,10 @@ header h1 {
 }
 
 .settings__field {
-    height: calc(100% - 90px);
+    width: 100%;
+    max-height: calc(100% - 90px);
     box-sizing: border-box;
+    background: #e34534;
     overflow: scroll;
     margin-top: 50px;
     padding: 0px 15px 15px;

@@ -224,14 +224,27 @@ document.addEventListener('DOMContentLoaded', () => {
   updateFPS();
 });
 
-// Обновление игры
+const targetFPS = 60; // Целевой FPS
+const frameDuration = 1000 / targetFPS; // Длительность одного кадра в миллисекундах
+
+let lastUpdateTime = performance.now(); // Время последнего обновления
+
 function updateGame() {
   if (isGameOver) return;
 
-  ballsСount.innerHTML = `${balls.length}`;
-  balls.forEach(updateBall);
+  const now = performance.now();
+  const deltaTime = now - lastUpdateTime;
+
+  if (deltaTime >= frameDuration) {
+    lastUpdateTime = now - (deltaTime % frameDuration); // Коррекция времени обновления
+
+    ballsСount.innerHTML = `${balls.length}`;
+    balls.forEach(updateBall);
+  }
+
   requestAnimationFrame(updateGame);
 }
+
 
 // Массив для хранения всех шаров
 const balls = [createBall(0, 0, 0, initialBallSpeed)];
