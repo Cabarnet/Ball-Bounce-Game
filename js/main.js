@@ -5,13 +5,13 @@ const containerRadius = container.offsetWidth / 2;
 let isGameOver = false, bounceCount = 0, plusSignExists = false, plusSign;
 let lastFrameTime = performance.now(); // Время последнего кадра
 
-const gravity = 0.1; // Гравитация
-const ballsToWin = 25; // Шаров для победы
-const newBallProbability = 0.15; // Вероятность создания нового
-const maxSpeed = 13; // Максимальная скорость
-const speedupAmount = 0.75; // Ускорение НА это кол-во
-const deleterSpeed = 0.02; // Скорость удаляющего элемента
-const initialBallSpeed = 3; // Начальная скорость шарика
+const gravity = parseFloat(localStorage.getItem('gravity'));
+const ballsToWin = parseInt(localStorage.getItem('ballsToWin'), 10);
+const newBallProbability = parseFloat(localStorage.getItem('newBallProbability'));
+const maxSpeed = parseInt(localStorage.getItem('maxSpeed'), 10);
+const speedupAmount = parseFloat(localStorage.getItem('speedupAmount'));
+const deleterSpeed = parseFloat(localStorage.getItem('deleterSpeed'));
+const initialBallSpeed = parseFloat(localStorage.getItem('initialBallSpeed'));
 
 // Вспомогательная функция для воспроизведения звука
 function playSound(src) {

@@ -42,7 +42,8 @@ body {
 header {
     position: absolute;
     top: 5vh;
-    width: 80vw;
+    max-width: 80vw;
+    width: 280px;
     color: #f4f3f3;
     font-size: 30px;
     text-align: center;
@@ -104,7 +105,7 @@ header h1 {
     width: 90vw;
     height: 90vh;
     inset: 5vh 5vw;
-    /* background-color: #ffffff47; */
+    background-color: #ffffff47;
     z-index: 31;
     clip-path: polygon(20px 0, 100% 0, 100% 10px, calc(100% - 3px) 15px, calc(100% - 3px) 50px, 100% 55px, 100% calc(100% - 20px), 
     calc(100% - 20px) 100%, 0 100%, 0 calc(100% - 10px), 3px calc(100% - 15px), 3px calc(100% - 50px), 0 calc(100% - 55px), 0 20px);
@@ -253,7 +254,7 @@ input[type="range"]::-ms-thumb {
     position: absolute;
     width: 40px;
     height: 40px;
-    background-image: url(../img/Plus_energy.png);
+    background-image: url(../img/Plus_energy2.png);
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 50%;
@@ -282,6 +283,7 @@ input[type="range"]::-ms-thumb {
     align-items: center;
     justify-content: center;
     backdrop-filter: grayscale(1);
+    -webkit-backdrop-filter: grayscale(1);
     z-index: 25;
     pointer-events: none;
     animation: ease-in fadeIn .3s;
@@ -311,6 +313,7 @@ input[type="range"]::-ms-thumb {
     background: linear-gradient(135deg, #82020C, #D3233E); */
     /* border-radius: 10px; */
     backdrop-filter: invert(1);
+    -webkit-backdrop-filter: invert(1);
     /* clip-path: path('M0,2 C40,6 40,6 80,1 L80,5 C70,10 20,14 0,6 Z');
     -webkit-clip-path: path('M0,2 C40,6 40,6 80,1 L80,5 C70,10 20,14 0,6 Z'); */
     /* border: 2px solid rgb(185, 0, 0); */
@@ -349,13 +352,16 @@ input[type="range"]::-ms-thumb {
 
 @keyframes flash {
     0% {
-        border-color: #f4f3f3;
+        /* border-color: #f4f3f3; */
+        box-shadow: 0px 0px 0px #fff;
     }
     25% {
-        border-color: rgb(248, 230, 67);
+        /* border-color: rgb(248, 230, 67); */
+        box-shadow: 0px 0px 15px #fff;
     }
     100% {
-        border-color: #f4f3f3;
+        /* border-color: #f4f3f3; */
+        box-shadow: 0px 0px 0px #fff;
     }
 }
 
