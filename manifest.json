@@ -1,0 +1,9 @@
+{
+  "name": "Ball Bounce Game",
+  "theme_color": "#000000",
+  "background_color": "#101010",
+  "short_name": "Bounce Game",
+  "id": "ball_bounce_game",
+  "description": "A game about a ball that bounces from wall to wall. Where you can configure almost everything",
+  "start_url": "https://cabarnet.github.io/Ball-Bounce-Game/"
+}
