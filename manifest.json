@@ -7,6 +7,7 @@
   "description": "A game about a ball that bounces from wall to wall. Where you can configure almost everything",
   "start_url": "https://cabarnet.github.io/Ball-Bounce-Game/",
   "lang": "en",
+  "display": "fullscreen",
   "scope": "https://cabarnet.github.io/Ball-Bounce-Game/",
   "dir": "ltr",
   "icons": [
