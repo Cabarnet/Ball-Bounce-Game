@@ -224,24 +224,11 @@ document.addEventListener('DOMContentLoaded', () => {
   updateFPS();
 });
 
-const targetFPS = 60; // Целевой FPS
-const frameDuration = 1000 / targetFPS; // Длительность одного кадра в миллисекундах
-
-let lastUpdateTime = performance.now(); // Время последнего обновления
-
 function updateGame() {
   if (isGameOver) return;
 
-  const now = performance.now();
-  const deltaTime = now - lastUpdateTime;
-
-  if (deltaTime >= frameDuration) {
-    lastUpdateTime = now - (deltaTime % frameDuration); // Коррекция времени обновления
-
-    ballsСount.innerHTML = `${balls.length}`;
-    balls.forEach(updateBall);
-  }
-
+  ballsСount.innerHTML = `${balls.length}`;
+  balls.forEach(updateBall);
   requestAnimationFrame(updateGame);
 }
 
