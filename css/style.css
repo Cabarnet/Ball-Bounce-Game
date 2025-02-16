@@ -10,6 +10,7 @@
 * {
     font-family: Joker, Arial;
     margin: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 html {
@@ -85,11 +86,11 @@ header h1 {
     height: 30px;
 }
 
-.settings {
+.settings, .first-alert {
     display: none;
 }
 
-.settings__close {
+.settings__close, .alert__close {
     position: absolute;
     inset: 0;
     width: 100vw;
@@ -99,13 +100,17 @@ header h1 {
     z-index: 30;
 }
 
-.settings__container {
+.alert__close {
+    backdrop-filter: unset;
+}
+
+.settings__container, .alert__container {
     color: #ffffff;
     position: absolute;
     width: 90vw;
-    height: 90vh;
+    height: 85vh;
     inset: 5vh 5vw;
-    background-color: #ffffff47;
+    background-color: #ffffff24;
     z-index: 31;
     clip-path: polygon(20px 0, 100% 0, 100% 10px, calc(100% - 3px) 15px, calc(100% - 3px) 50px, 100% 55px, 100% calc(100% - 20px), 
     calc(100% - 20px) 100%, 0 100%, 0 calc(100% - 10px), 3px calc(100% - 15px), 3px calc(100% - 50px), 0 calc(100% - 55px), 0 20px);
@@ -115,7 +120,22 @@ header h1 {
     justify-content: space-between;
 }
 
-.settings__container img.close {
+.alert__container {
+    inset: 50% 5vw;
+    transform: translateY(-50%);
+    padding: 50px 20px 20px;
+    box-sizing: border-box;
+    height: fit-content;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    filter: drop-shadow(2px 4px 6px #158aff);
+}
+
+.alert__container p {
+    font-family: monospace;
+}
+
+.settings__container img.close, .alert__container img.close {
     position: absolute;
     top: 0px;
     right: 0px;
@@ -146,7 +166,7 @@ header h1 {
     width: 100%;
     max-height: calc(100% - 90px);
     box-sizing: border-box;
-    background: #e34534;
+    /* background: #e34534; */
     overflow: scroll;
     margin-top: 50px;
     padding: 0px 15px 15px;
@@ -166,13 +186,14 @@ header h1 {
 
 .setting-row input[type="number"] {
     width: 30%;
-    background: #0000007d;
+    background: #0000003d;
     font-family: monospace;
     border: 1px solid #f4f3f3;
     text-align: center;
     color: #f4f3f3;
-    filter: drop-shadow(2px 4px 6px #f4f3f3);
+    /* filter: drop-shadow(2px 4px 6px #f4f3f3); */
     clip-path: polygon(5px 0px, 100% 0px, 100% calc(100% - 15px), calc(100% - 5px) 100%, 0 100%, 0 15px);
+    outline: transparent;
 }
 
 /* Общий стиль для слайдера */

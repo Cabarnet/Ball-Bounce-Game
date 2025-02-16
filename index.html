@@ -27,8 +27,8 @@
 
     <div class="fps">FPS: <span></span></div>
 
-
     <div class="center-line start"><p>Press to start</p></div>
+
     <div class="settings">
         <div class="settings__close" onclick="closeSettings()"></div>
         <div class="settings__container">
@@ -44,7 +44,7 @@
                 <div class="settings__item">
                     Gravity 
                     <div class="setting-row">
-                        <input type="range" min="0" max="1" step="0.025"> 
+                        <input type="range" min="0" max="1" step="0.01"> 
                         <input type="number" id="gravityInput">
                     </div>
                 </div>
@@ -79,14 +79,14 @@
                 <div class="settings__item">
                     Start ball speed
                     <div class="setting-row">
-                        <input type="range" min="0" max="10" step="0.5"> 
+                        <input type="range" min="0" max="10" step="0.1"> 
                         <input type="number" id="startBallSpeedInput">
                     </div>
                 </div>
                 <div class="settings__item">
                     Removal element speed
                     <div class="setting-row">
-                        <input type="range" min="0" max="0.5" step="0.005"> 
+                        <input type="range" min="0" max="20" step="0.1"> 
                         <input type="number" id="removalElementSpeedInput">
                     </div>
                 </div>
@@ -95,6 +95,14 @@
         </div>
 
         </form>
+    </div>
+
+    <div class="first-alert">
+        <div class="alert__close" onclick="closeAlert()"></div>
+        <div class="alert__container">
+            <img src="img/Close.png" class="close" alt="Close" onclick="closeAlert()">
+            <p>The game is in development and improvement. Some bugs may come across. Lags may appear on a large number of balls!</p>
+        </div>
     </div>
 
     <script src="js/localstorage.js"></script>

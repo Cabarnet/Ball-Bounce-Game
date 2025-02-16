@@ -1,4 +1,5 @@
 const settingsBlock = document.querySelector('.settings');
+const alertBlock = document.querySelector('.first-alert');
 
 const gravityInput = document.getElementById('gravityInput');
 const ballsToWinInput = document.getElementById('ballsToWinInput');
@@ -15,7 +16,7 @@ window.addEventListener('load', () => {
     maxBallSpeedInput.value = parseInt(localStorage.getItem('maxSpeed'), 10);
     boosterSpeedupInput.value = parseFloat(localStorage.getItem('speedupAmount'));
     startBallSpeedInput.value = parseFloat(localStorage.getItem('initialBallSpeed'));
-    removalElementSpeedInput.value = parseFloat(localStorage.getItem('deleterSpeed'));
+    removalElementSpeedInput.value = parseFloat(localStorage.getItem('deleterSpeed')) * 100;
 });
 
 function openSettings() {
@@ -24,6 +25,17 @@ function openSettings() {
 
 function closeSettings() {
     settingsBlock.style.display = 'none';
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (localStorage.getItem('isAlerted') != 'true') {
+        console.log(localStorage.getItem('isAlerted'));
+        alertBlock.style.display = 'block';
+    }
+});
+function closeAlert() {
+    alertBlock.style.display = 'none';
+    localStorage.setItem('isAlerted', true);
 }
 
 const settingBlock = document.querySelectorAll('.setting-row');
@@ -73,7 +85,7 @@ function saveSettings() {
     localStorage.setItem('maxSpeed', maxBallSpeedInput.value);
     localStorage.setItem('speedupAmount', boosterSpeedupInput.value);
     localStorage.setItem('initialBallSpeed', startBallSpeedInput.value);
-    localStorage.setItem('deleterSpeed', removalElementSpeedInput.value);
+    localStorage.setItem('deleterSpeed', removalElementSpeedInput.value/100);
 
     window.location.reload();
     console.log(localStorage);
